@@ -17,13 +17,12 @@ public class DiscordBot {
     private static BotInformation inf;
     public JDABuilder builder;
     private CommandManager cmdMan;
-    static String path = "<Your path to the directory of your .json file>";
+    static String path = "src\\main\\java\\dev\\zepnex\\utils\\";
 
     public static void main(String[] args) throws LoginException {
         Gson gson = new Gson();
         try {
-            BufferedReader reader = new BufferedReader(
-                    new FileReader(path + "BotInf.json"));
+            BufferedReader reader = new BufferedReader(new FileReader(path + "BotInf.json"));
             inf = gson.fromJson(reader, BotInformation.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
