@@ -3,6 +3,7 @@ package dev.zepnex;
 import com.google.gson.Gson;
 import dev.zepnex.listener.CommandListener;
 import dev.zepnex.listener.CommandManager;
+import dev.zepnex.utils.BotInformation;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;

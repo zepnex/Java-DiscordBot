@@ -1,4 +1,4 @@
-package dev.zepnex;
+package dev.zepnex.utils;
 
 public class BotInformation {
     private String token;
