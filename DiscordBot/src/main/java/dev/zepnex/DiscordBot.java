@@ -1,6 +1,7 @@
 package dev.zepnex;
 
 import com.google.gson.Gson;
+import dev.zepnex.commands.events.MemberJoin;
 import dev.zepnex.listener.CommandListener;
 import dev.zepnex.listener.CommandManager;
 import dev.zepnex.utils.BotInformation;
@@ -36,6 +37,7 @@ public class DiscordBot {
         builder = new JDABuilder(inf.getToken());
         this.cmdMan = new CommandManager();
         builder.addEventListeners(new CommandListener());
+        builder.addEventListeners(new MemberJoin());
         builder.setActivity(Activity.playing("Mooooin Maister"));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.build();

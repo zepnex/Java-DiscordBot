@@ -1,5 +1,6 @@
 package dev.zepnex.listener;
 
+import dev.zepnex.commands.AnilistCommand;
 import dev.zepnex.commands.ClearCommand;
 import dev.zepnex.commands.PingCommand;
 import dev.zepnex.commands.type.ServerCommand;
@@ -17,6 +18,7 @@ public class CommandManager {
         this.commands = new ConcurrentHashMap<>();
         this.commands.put("clear", new ClearCommand());
         this.commands.put("ping", new PingCommand());
+        this.commands.put("anilist", new AnilistCommand());
     }
 
     public boolean perform(String command, Member member, TextChannel textChannel, Message msg) {
