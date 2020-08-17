@@ -42,7 +42,7 @@ public class ClearCommand implements ServerCommand {
     private void purgeMessages(TextChannel channel, int numberOfMessages) {
         List<Message> history = new MessageHistory(channel).retrievePast(numberOfMessages).complete();
         List msg =channel.purgeMessages(history);
-        System.out.println(msg);
+
 
     }
 }

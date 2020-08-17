@@ -1,6 +1,7 @@
 package dev.zepnex;
 
 import com.google.gson.Gson;
+import dev.zepnex.commands.AnimeSuggestion;
 import dev.zepnex.commands.events.MemberJoin;
 import dev.zepnex.listener.CommandListener;
 import dev.zepnex.listener.CommandManager;
@@ -38,7 +39,8 @@ public class DiscordBot {
         this.cmdMan = new CommandManager();
         builder.addEventListeners(new CommandListener());
         builder.addEventListeners(new MemberJoin());
-        builder.setActivity(Activity.playing("Mooooin Maister"));
+        builder.addEventListeners(new AnimeSuggestion());
+        builder.setActivity(Activity.playing("reviewing animes"));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.build();
         shutdown();
