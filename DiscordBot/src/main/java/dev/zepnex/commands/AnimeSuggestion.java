@@ -1,5 +1,6 @@
 package dev.zepnex.commands;
 
+import dev.zepnex.utils.Database;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -31,8 +32,15 @@ public class AnimeSuggestion extends ListenerAdapter {
                     channel.sendMessage("This movie is already planned to be watched")
                             .complete().delete().queueAfter(3, TimeUnit.SECONDS);
                 } else {
-                    planToWatch.sendMessage(movie).complete();
-                    channel.deleteMessageById(messageID).queueAfter(3,TimeUnit.SECONDS);
+                    if (movie.endsWith("needs anime")) {
+                        // Works fine
+                        Database.insert(event.getMessage(), true);
+                    }else{
+                        //planToWatch.sendMessage(movie).complete();
+                        //channel.deleteMessageById(messageID).queueAfter(3,TimeUnit.SECONDS);
+                        System.out.println("some");
+                        Database.insert(event.getMessage(),false);
+                    }
                 }
             }
         }

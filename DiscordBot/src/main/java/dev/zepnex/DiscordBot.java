@@ -6,6 +6,7 @@ import dev.zepnex.commands.events.MemberJoin;
 import dev.zepnex.listener.CommandListener;
 import dev.zepnex.listener.CommandManager;
 import dev.zepnex.utils.BotInformation;
+import dev.zepnex.utils.Database;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -23,6 +24,7 @@ public class DiscordBot {
 
     public static void main(String[] args) throws LoginException {
         Gson gson = new Gson();
+
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path + "BotInf.json"));
             inf = gson.fromJson(reader, BotInformation.class);
@@ -30,6 +32,8 @@ public class DiscordBot {
             e.printStackTrace();
         }
         new DiscordBot();
+
+
     }
 
     public DiscordBot() throws LoginException {
@@ -43,6 +47,7 @@ public class DiscordBot {
         builder.setActivity(Activity.playing("reviewing animes"));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.build();
+        new Database().createTables();
         shutdown();
 
 
