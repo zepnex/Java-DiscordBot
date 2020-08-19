@@ -36,22 +36,22 @@ public class Database {
 
     /**
      * ############
-     * #QUERRYS####
+     * #QUERRIES###
      * ############
      **/
 
-    public static void insert(Message msg, boolean needsAnime) {
-        String[] content = msg.getContentDisplay().split("`");
+    public static void insert(String table, String arguments, String keys) {
+
         try {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(url, "mateo", "roockie12345");
             conn.setAutoCommit(false);
+            String sql = String.format("INSERT INTO " + table + " (%s) VALUES (%s)", keys, arguments);
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
 
-            PreparedStatement ps = conn
-                    .prepareStatement("INSERT  INTO movie (movielink, needsanime) VALUES (?,?)");
-            ps.setString(1, content[0]);
-            ps.setBoolean(2, needsAnime);
-            ps.close();
+
+            stmt.close();
             conn.commit();
             conn.close();
 

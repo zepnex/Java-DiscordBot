@@ -32,14 +32,16 @@ public class AnimeSuggestion extends ListenerAdapter {
                     channel.sendMessage("This movie is already planned to be watched")
                             .complete().delete().queueAfter(3, TimeUnit.SECONDS);
                 } else {
-                    if (movie.endsWith("needs anime")) {
+                    if (movie.endsWith("`needs anime`")) {
                         // Works fine
-                        Database.insert(event.getMessage(), true);
-                    }else{
-                        //planToWatch.sendMessage(movie).complete();
-                        //channel.deleteMessageById(messageID).queueAfter(3,TimeUnit.SECONDS);
-                        System.out.println("some");
-                        Database.insert(event.getMessage(),false);
+                        String[] conten = movie.split("`");
+                        String values = "'" + conten[0] + "'" + ",'true'";
+                        String keys = "movielink, needsanime";
+                        Database.insert("moviesuggestions", values, keys);
+                    } else {
+                        String values = "'" + event.getMessage().getContentStripped() + "'" + ",'false'";
+                        String keys = "movielink, needsanime";
+                        Database.insert("moviesuggestions", values, keys);
                     }
                 }
             }
