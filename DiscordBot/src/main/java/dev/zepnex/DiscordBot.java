@@ -31,6 +31,7 @@ public class DiscordBot {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        new Database().createTables();
         new DiscordBot();
 
 

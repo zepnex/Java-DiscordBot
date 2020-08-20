@@ -31,7 +31,7 @@ public class Database {
             Statement stmt;
             try {
                 Class.forName("org.postgresql.Driver");
-                conn = DriverManager.getConnection(url, inf.getUser(), inf.getPassword());
+                conn = DriverManager.getConnection(url, inf.getDatabaseUser(), inf.getDatabasePassword());
                 stmt = conn.createStatement();
 
 
@@ -61,7 +61,7 @@ public class Database {
 
         try {
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection(url, inf.getUser(), inf.getPassword());
+            Connection conn = DriverManager.getConnection(url, inf.getDatabaseUser(), inf.getDatabasePassword());
             conn.setAutoCommit(false);
             String[] key = arguments.split(",");
             String values = "(";
@@ -82,7 +82,6 @@ public class Database {
                     ps.setString(i + 1, key[i]);
                 }
             }
-            System.out.println(ps);
             ps.executeUpdate();
             ps.close();
             conn.commit();

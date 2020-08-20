@@ -2,24 +2,27 @@ package dev.zepnex.utils;
 
 public class BotInformation {
     private String token;
-    private String user;
-    private String password;
+    private String databaseUser;
+    private String databasePassword;
 
-    public BotInformation(String token, String user, String password) {
+    public BotInformation(String token, String databaseUser, String databasePassword) {
         this.token = token;
-        this.user = user;
-        this.password = password;
+        this.databaseUser = databaseUser;
+        this.databasePassword = databasePassword;
+
     }
 
     public String getToken() {
         return token;
     }
 
-    public String getUser() {
-        return user;
+    public String getDatabaseUser() {
+        return databaseUser;
     }
 
-    public String getPassword() {
-        return password;
+    public String getDatabasePassword() {
+        return databasePassword;
     }
+
+
 }
