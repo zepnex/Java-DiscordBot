@@ -34,12 +34,12 @@ public class AnimeSuggestion extends ListenerAdapter {
                 } else {
                     if (movie.endsWith("`needs anime`")) {
                         // Works fine
-                        String[] conten = movie.split("`");
-                        String values = "'" + conten[0] + "'" + ",'true'";
+                        String[] content = movie.split("`");
+                        String values = content[0] + "," + true;
                         String keys = "movielink, needsanime";
                         Database.insert("moviesuggestions", values, keys);
                     } else {
-                        String values = "'" + event.getMessage().getContentStripped() + "'" + ",'false'";
+                        String values = event.getMessage().getContentStripped() + "," + false;
                         String keys = "movielink, needsanime";
                         Database.insert("moviesuggestions", values, keys);
                     }
