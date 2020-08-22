@@ -1,28 +1,35 @@
 package dev.zepnex.utils;
 
+import com.google.gson.annotations.SerializedName;
+
 public class BotInformation {
     private String token;
-    private String databaseUser;
-    private String databasePassword;
+    private Database database;
 
-    public BotInformation(String token, String databaseUser, String databasePassword) {
+
+    public BotInformation(String token) {
         this.token = token;
-        this.databaseUser = databaseUser;
-        this.databasePassword = databasePassword;
-
     }
 
     public String getToken() {
         return token;
     }
 
-    public String getDatabaseUser() {
-        return databaseUser;
+    public Database getDatabase() {
+        return database;
     }
 
-    public String getDatabasePassword() {
-        return databasePassword;
+    public class Database {
+        private String user;
+        private String password;
+
+        public String getUser() {
+            return user;
+        }
+
+        public String getPassword() {
+            return password;
+        }
     }
-
-
 }
+

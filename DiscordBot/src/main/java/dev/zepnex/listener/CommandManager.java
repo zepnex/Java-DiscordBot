@@ -2,6 +2,7 @@ package dev.zepnex.listener;
 
 import dev.zepnex.commands.ClearCommand;
 import dev.zepnex.commands.PingCommand;
+import dev.zepnex.commands.Test;
 import dev.zepnex.commands.type.ServerCommand;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -17,6 +18,7 @@ public class CommandManager {
         this.commands = new ConcurrentHashMap<>();
         this.commands.put("clear", new ClearCommand());
         this.commands.put("ping", new PingCommand());
+        this.commands.put("test", new Test());
     }
 
     public boolean perform(String command, Member member, TextChannel textChannel, Message msg) {

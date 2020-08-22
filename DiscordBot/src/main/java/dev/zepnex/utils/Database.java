@@ -1,7 +1,7 @@
 package dev.zepnex.utils;
 
+import checkers.units.quals.A;
 import com.google.gson.Gson;
-import net.dv8tion.jda.api.entities.Message;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -15,10 +15,12 @@ public class Database {
     private static String url = "jdbc:postgresql://localhost:5432/Maple";
     BufferedReader reader;
 
+
     {
         try {
             reader = new BufferedReader(new FileReader(path + "BotInf.json"));
             inf = gson.fromJson(reader, BotInformation.class);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -31,7 +33,7 @@ public class Database {
             Statement stmt;
             try {
                 Class.forName("org.postgresql.Driver");
-                conn = DriverManager.getConnection(url, inf.getDatabaseUser(), inf.getDatabasePassword());
+                conn = DriverManager.getConnection(url, inf.getDatabase().getUser(), inf.getDatabase().getPassword());
                 stmt = conn.createStatement();
 
 
@@ -61,7 +63,7 @@ public class Database {
 
         try {
             Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection(url, inf.getDatabaseUser(), inf.getDatabasePassword());
+            Connection conn = DriverManager.getConnection(url, inf.getDatabase().getUser(), inf.getDatabase().getPassword());
             conn.setAutoCommit(false);
             String[] key = arguments.split(",");
             String values = "(";
@@ -92,4 +94,39 @@ public class Database {
             System.exit(0);
         }
     }
+
+    public static Array[][] selectAll(String table) {
+        int count = 0;
+        int row = 0;
+        Array[][] allData = new Array[0][];
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection conn = DriverManager.getConnection(url, inf.getDatabase().getUser(), inf.getDatabase().getPassword());
+            conn.setAutoCommit(false);
+            String sql = String.format("Select * From " + table);
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            while (rs.next()) {
+                row = rs.getRow();
+            }
+            System.out.println(row);
+            allData = new Array[row][rsmd.getColumnCount()];
+            //To-Do: Save Data in allData Array
+
+
+
+
+            stmt.close();
+            conn.commit();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return allData;
+    }
+
 }

@@ -48,7 +48,6 @@ public class DiscordBot {
         builder.setActivity(Activity.playing("reviewing animes"));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.build();
-        new Database().createTables();
         shutdown();
 
 
