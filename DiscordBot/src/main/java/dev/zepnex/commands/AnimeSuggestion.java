@@ -23,7 +23,9 @@ public class AnimeSuggestion extends ListenerAdapter {
         String messageID = event.getMessageId();
 
         if (channel.getId().equalsIgnoreCase(filmSuggestions)) {
-            String movie = event.getMessage().getContentDisplay();
+            String movie = event.getMessage().getContentStripped();
+            movie = movie.replace("\n", "`");
+            String[] content = movie.split("`");
             List<Message> history = new MessageHistory(planToWatch).retrievePast(20).complete();
 
             if (movie.startsWith("https://anilist.co/")) {
@@ -32,20 +34,20 @@ public class AnimeSuggestion extends ListenerAdapter {
                     channel.sendMessage("This movie is already planned to be watched")
                             .complete().delete().queueAfter(3, TimeUnit.SECONDS);
                 } else {
-                    if (movie.endsWith("`needs anime`")) {
-                        // Works fine
+                    if (movie.endsWith("needs anime")) {
                         long startTime = System.nanoTime();
-                        String[] content = movie.split("`");
                         String values = content[0] + "," + true;
                         String keys = "movielink, needsanime";
                         Database.insert("moviesuggestions", values, keys);
                         long elapsedTime = System.nanoTime() - startTime;
-                        System.out.println("Total execution time to create 1000K objects in Java in millis: "
-                                + elapsedTime/1000000);
+                        System.out.println("Insert took: " + elapsedTime / 1000000 + " milliseconds");
                     } else {
-                        String values = event.getMessage().getContentStripped() + "," + false;
+                        long startTime = System.nanoTime();
+                        String values = content[0] + "," + false;
                         String keys = "movielink, needsanime";
                         Database.insert("moviesuggestions", values, keys);
+                        long elapsedTime = System.nanoTime() - startTime;
+                        System.out.println("Insert took: " + elapsedTime / 1000000 + " milliseconds");
                     }
                 }
             }

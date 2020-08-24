@@ -1,6 +1,5 @@
 package dev.zepnex.utils;
 
-import checkers.units.quals.A;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -95,30 +94,33 @@ public class Database {
         }
     }
 
-    public static Array[][] selectAll(String table) {
-        int count = 0;
-        int row = 0;
-        Array[][] allData = new Array[0][];
+    public static String[] selectAll(String table) {
+        String[] allData = new String[0];
 
         try {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(url, inf.getDatabase().getUser(), inf.getDatabase().getPassword());
             conn.setAutoCommit(false);
-            String sql = String.format("Select * From " + table);
-            Statement stmt = conn.createStatement();
+            String sql = "Select * From " + table;
 
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery(sql);
             ResultSetMetaData rsmd = rs.getMetaData();
-            while (rs.next()) {
-                row = rs.getRow();
-            }
-            System.out.println(row);
-            allData = new Array[row][rsmd.getColumnCount()];
+            rs.last();
+            allData = new String[rs.getRow()];
+            rs.beforeFirst();
+
             //To-Do: Save Data in allData Array
-
-
-
-
+            int i = 0;
+            while (rs.next()) {
+                String text = "";
+                for (int j = 0, count = 1; j < rsmd.getColumnCount(); j++, count++) {
+                    text += rs.getString(count) + ", ";
+                }
+                text = text.substring(0, text.length() - 2);
+                allData[i] = text;
+                i++;
+            }
             stmt.close();
             conn.commit();
             conn.close();

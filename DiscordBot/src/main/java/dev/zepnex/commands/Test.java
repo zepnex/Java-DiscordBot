@@ -12,16 +12,15 @@ public class Test implements ServerCommand {
     @Override
     public void performCommand(Member member, TextChannel textChannel, Message msg) {
         long startTime = System.nanoTime();
-        Array[][] data = Database.selectAll("moviesuggestions");
+        String[] data = Database.selectAll("moviesuggestions");
         long elapsedTime = System.nanoTime() - startTime;
-        System.out.println("Total execution time to create 1000K objects in Java in millis: "
-                + elapsedTime / 1000000);
+        System.out.println("Select all took: "
+                + elapsedTime / 1000000 + " milliseconds");
 
         for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data[i].length; j++) {
-                System.out.println(data[i][j]);
-            }
+            System.out.println(data[i]);
         }
+
 
     }
 }
